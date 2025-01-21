@@ -288,7 +288,7 @@ def main():
                 2. Go to "Bulk Export" tab
                 3. Click "Links" > "All Inlinks"
             """)
-        issues_overview = st.file_uploader("Upload 'issues_overview_report.csv'", type=['csv'])
+        issues_overview = st.file_uploader("Upload issues_overview_report.csv", type=['csv'])
         with st.expander("💡 Need help exporting issues_overview_report.csv?"):
             st.markdown("""
                 1. With Screaming Frog Crawl Open
@@ -296,14 +296,14 @@ def main():
                 3. Click "Issues Overview"
             """)
     with col2:
-        search_console = st.file_uploader("Upload 'search_console_all.csv'", type=['csv'])
+        search_console = st.file_uploader("Upload search_console_all.csv", type=['csv'])
         with st.expander("💡 Need help exporting search_console_all.csv?"):
             st.markdown("""
                 1. Ensure GSC API is Enabled Across Entire Crawl
                 2. Go to "Search Console" Crawl tab
                 3. Click "📤Export"
             """)
-        issues_reports = st.file_uploader("Upload 'issues_reports' (multiple files)", type=['csv'],
+        issues_reports = st.file_uploader("Upload issues_reports (multiple files)", type=['csv'],
                                           accept_multiple_files=True)
         with st.expander("💡 Need help exporting issues_report?"):
             st.markdown("""
