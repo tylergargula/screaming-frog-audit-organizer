@@ -3,6 +3,7 @@ import mplcursors
 import numpy as np
 from sklearn.cluster import KMeans
 
+
 def plot_elbow(embeddings, max_clusters=15):
     """
     Create elbow plot to determine optimal number of clusters
@@ -70,7 +71,7 @@ def clusters_2D(x_values, y_values, labels, kmeans_labels):
     # Create scatter plot with different colors for each cluster
     scatter = plt.scatter(x_values, y_values,
                           c=kmeans_labels,
-                          s=150,  # Increased point size
+                          s=50,  # Increased point size
                           alpha=0.7)
 
     # Add labels and title
