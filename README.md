@@ -2,6 +2,7 @@
 
 A Streamlit application that helps SEO professionals prioritize technical issues discovered through Screaming Frog crawls by analyzing factors like organic traffic impact, issue severity, and scale.
 
+[![Run in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://screaming-frog-seo-audit-organizer.streamlit.app/)
 ## 🎯 Features
 
 ### Impact Score Analysis
