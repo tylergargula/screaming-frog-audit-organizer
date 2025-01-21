@@ -1,7 +1,7 @@
 # src/__init__.py
 from .data import clean_data, calculate_impact_score, label_data
 from .visualization import plot_elbow, clusters_2D, plot_top_percentiles
-from .utils import export_data, generate_embeddings
+from .utils import export_data, generate_embeddings, export_streamlit_data
 
 __all__ = [
     'clean_data',
@@ -11,5 +11,6 @@ __all__ = [
     'clusters_2D',
     'plot_top_percentiles',
     'export_data',
-    'generate_embeddings'
+    'generate_embeddings',
+    'export_streamlit_data'
 ]
