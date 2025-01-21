@@ -231,6 +231,12 @@ def plot_top_percentiles(df, perc_n):
         color_discrete_sequence=['#ff7f0e']  # Orange for low impact issues
     )
 
+    fig_top.update_yaxes(tickfont=dict(size=16))
+    fig_bottom.update_yaxes(tickfont=dict(size=16))
+
+    fig_top.update_xaxes(tickfont=dict(size=16))
+    fig_bottom.update_xaxes(tickfont=dict(size=16))
+
     return fig_top, fig_bottom
 
 
@@ -462,11 +468,13 @@ if __name__ == "__main__":
     main()
 
 
-# Add a footer
+# footer
 st.markdown("""
     <div style='position: fixed; bottom: 0; width: 100%; text-align: center; padding: 1rem; background-color: white;'>
-        <p style='color: #6B7280; font-size: 0.875rem;'>
-            Built by <a href="https://tylergargula.dev">Tyler Gargula</a> for SEO professionals
+        <p style='color: #6B7280; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; gap: 4px;'>
+            Built by 
+            <img src="https://avatars.githubusercontent.com/u/64625949" style='width: 20px; height: 20px; border-radius: 50%; object-fit: cover; margin: 0 2px;'/>
+            <a href="https://tylergargula.dev" style='color: rgb(37, 99, 235); text-decoration: none;'>Tyler Gargula</a>
         </p>
     </div>
 """, unsafe_allow_html=True)
