@@ -10,13 +10,13 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 
-st.set_page_config(page_title="Screaming Frog Tech Audit Prioritizer 🐸⚡️", layout="wide")
+st.set_page_config(page_title="Screaming Frog Tech Audit Prioritizer", layout="wide")
 
 
 def show_intro_content():
     """Display introduction and explanation of the app"""
     st.markdown("""
-    # Screaming Frog Tech Audit Prioritizer
+    # Screaming Frog Tech Audit Prioritizer 🐸⚡️
 
     Create a prioritized list of issues from Screaming Frog's tech audit based on level of impact. This tool uses a custom prioritization algorithm to label issues based on factors like:
     * **Organic Traffic:** The traffic of affected pages
