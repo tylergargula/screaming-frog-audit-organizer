@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 
-st.set_page_config(page_title="Screaming Frog Tech Audit Prioritizer", layout="wide")
+st.set_page_config(page_title="Screaming Frog Tech Audit Prioritizer 🐸⚡️", layout="wide")
 
 
 def show_intro_content():
