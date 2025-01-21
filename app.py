@@ -19,7 +19,7 @@ def show_intro_content():
     # Screaming Frog Tech Audit Prioritizer
 
     Create a prioritized list of issues from Screaming Frog's tech audit based on level of impact. This tool uses a custom prioritization algorithm to label issues based on factors like:
-    * **Organic Traffic:** Are high-traffic pages experiencing issues?
+    * **Organic Traffic:** The traffic of affected pages
     * **Issue Type:** Warning, Opportunity, Issue
     * **Issue Priority:** Low, Medium, High
     * **Issue Scale:** The volume of each issue
