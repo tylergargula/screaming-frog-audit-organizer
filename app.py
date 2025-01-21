@@ -271,6 +271,8 @@ def perform_clustering(issues_group, n_clusters=10):
         title='Issue Clusters Visualization'
     )
 
+    cluster_fig.update_traces(marker=dict(size=20))
+
     return cluster_fig
 
 
@@ -301,7 +303,7 @@ def main():
             st.markdown("""
                 1. Ensure GSC API is Enabled Across Entire Crawl
                 2. Go to "Search Console" Crawl tab
-                3. Click "📤Export"
+                3. Click "📤 Export"
             """)
         issues_reports = st.file_uploader("Upload issues_reports (multiple files)", type=['csv'],
                                           accept_multiple_files=True)
@@ -468,7 +470,42 @@ if __name__ == "__main__":
     main()
 
 
-# footer
+
+# FAQ Section
+st.markdown("### Frequently Asked Questions")
+
+faq_items = [
+    ("How do I use this tool effectively?", """
+    To get the best results:
+    1. Export the data directly from Screaming Frog SEO Spider.
+    2. Do not change the file names when uploading.
+    3. Follow the tips above to make sure you're uploading the correct files.
+
+    💡Tip: Remove any unnecessary data from the issues_reports folder. I recommend removing
+    issues that are known to be low SEO impact such as Security issues. 
+    """),
+    ("Do I need a paid Screaming Frog license?", """
+    You don't need a paid Screaming Frog license, but your insights from this tool may 
+    be limited by the free version's crawl limits. 
+    """),
+    ("What if I don't have access to the GSC API or a GSC Property", """
+    This tool is currently designed to only run off of the GSC data exported from Screaming Frog. 
+    An open source notebook will be released in the future to allow for easier custom data uploads.
+    """),
+    ('How is "Impact Score" calculate?', """
+    The impact score is calculated using a combination of metrics, such as traffic, issue type, 
+    issue priority, and issue scale. The impact scores is a product of calculated weights, and should be
+    reviewed for accuracy by an SEO.
+    """)
+]
+
+
+for question, answer in faq_items:
+    with st.expander(question):
+        st.markdown(answer)
+
+
+# Footer
 st.markdown("""
     <div style='position: fixed; bottom: 0; width: 100%; text-align: center; padding: 1rem; background-color: white;'>
         <p style='color: #6B7280; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; gap: 4px;'>
