@@ -25,6 +25,10 @@ Analyze internal linking patterns and HTTP status codes:
 
 ![Status Code Analysis](media/status_code_analysis.gif)
 
+### Export Functionality
+Easily export your prioritized issues for further analysis or reporting:
+![Export Functionality](media/export_feature.gif)
+
 ## 📋 Prerequisites
 
 - Python 3.8+
@@ -69,8 +73,8 @@ sscreaming-frog-audit-organizer/
 │       ├── init.py
 │       ├── clustering.py
 │       └── plotting.py
-├── streamlit/
-│   └── app.py
+├── app.py
+│  
 └── media/             # Documentation assets
 
 ```
