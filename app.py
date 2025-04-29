@@ -264,19 +264,52 @@ def perform_clustering(issues_group, n_clusters=10):
                 'PCA1': new_values[:, 0],
                 'PCA2': new_values[:, 1],
                 'Cluster': kmeans_labels,
-                'Issue': issues_group['Issue Name']
+                'Issue': issues_group['Issue Name'],
+                'Impact_Score': issues_group['Impact_Score'],
+                'Pages_Affected': issues_group['Issue Count']
             })
 
+            # Calculate average metrics per cluster for labeling
+            cluster_stats = cluster_df.groupby('Cluster').agg({
+                'Impact_Score': 'mean',
+                'Pages_Affected': 'mean'
+            }).reset_index()
+
+            # Create a more informative plot
             cluster_fig = px.scatter(
                 cluster_df,
                 x='PCA1',
                 y='PCA2',
                 color='Cluster',
-                hover_data=['Issue'],
-                title='Issue Clusters Visualization'
+                size='Impact_Score',  # Size points by impact score
+                hover_data=['Issue', 'Impact_Score', 'Pages_Affected'],
+                title='Issue Clusters by Similarity and Impact',
+                labels={
+                    'PCA1': 'Content Similarity Dimension 1',
+                    'PCA2': 'Content Similarity Dimension 2'
+                }
             )
 
-            cluster_fig.update_traces(marker=dict(size=20))
+            # Improve visual appearance
+            cluster_fig.update_traces(
+                marker=dict(
+                    size=cluster_df['Impact_Score'] * 10,  # Scale for better visibility
+                    sizemode='area',
+                    sizemin=5
+                )
+            )
+            
+            # Add helpful annotations
+            cluster_fig.update_layout(
+                annotations=[
+                    dict(
+                        text="Larger bubbles = Higher Impact Score",
+                        showarrow=False,
+                        xref="paper", yref="paper",
+                        x=0.01, y=0.99
+                    )
+                ]
+            )
             
         return cluster_fig
         
