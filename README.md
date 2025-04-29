@@ -58,7 +58,7 @@ streamlit run app.py
 
 ## 🛠️ Technical Architecture
 ```bash
-sscreaming-frog-audit-organizer/
+screaming-frog-audit-organizer/
 ├── src/
 │   ├── init.py
 │   ├── data/
