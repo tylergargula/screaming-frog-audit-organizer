@@ -337,11 +337,32 @@ def main():
                     # Process issue files
                     issues = []
                     for issue in os.listdir(issues_dir):
-                        issue_df = pd.read_csv(os.path.join(issues_dir, issue))
-                        issue_name = issue.split('.')[0]
-                        issue_df['issue'] = issue_name
-                        issues.append(issue_df)
+                        # Skip macOS hidden metadata files
+                        if issue.startswith('._'):
+                         
+                            print(f"Skipping macOS metadata file: {issue}")
+                            continue
+                            
+                        try:
+                            issue_path = os.path.join(issues_dir, issue)
+                            # Try with explicit encoding or detect encoding
+                            try:
+                                issue_df = pd.read_csv(issue_path)
+                            except UnicodeDecodeError:
+                                print(f"Encoding issue detected with file: {issue}. Trying with Latin-1 encoding.")
+                                issue_df = pd.read_csv(issue_path, encoding='latin-1')
+                            
+                            issue_name = issue.split('.')[0]
+                            issue_df['issue'] = issue_name
+                            issues.append(issue_df)
+                        except Exception as e:
+                            st.error(f"Error processing file {issue}: {str(e)}")
+                            continue
 
+                    if not issues:
+                        st.error("No valid issue files could be processed.")
+                        return
+                        
                     issues_df = pd.concat(issues)
                     issues_df = issues_df.dropna(subset=['Address'])
 
@@ -447,7 +468,9 @@ def main():
                             with col2:
                                 st.metric("URLs with Traffic", result['with_traffic'])
                                 st.metric("URLs without Traffic", result['without_traffic'])
+                                st.metric("Total Affected Traffic", int(result['data']['Clicks'].sum()))
                                 st.info(f"**Recommendation:**\n\n{result['recommendation']}")
+                                
 
                     # Export button for internal links analysis
                     st.subheader("Export Internal Links Analysis")
