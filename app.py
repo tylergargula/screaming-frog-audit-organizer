@@ -242,38 +242,48 @@ def plot_top_percentiles(df, perc_n):
 
 def perform_clustering(issues_group, n_clusters=10):
     """Perform clustering analysis and return figures"""
-    issues_list = issues_group['Issue Name'].tolist()
-    issues_embeddings = generate_embeddings(issues_list)
+    try:
+        issues_list = issues_group['Issue Name'].tolist()
+        
+        # Generate embeddings - this now has a fallback to TF-IDF if transformer fails
+        with st.status("Generating embeddings for clustering..."):
+            issues_embeddings = generate_embeddings(issues_list)
+        
+        # Perform KMeans clustering
+        with st.status("Performing clustering analysis..."):
+            kmeans = KMeans(n_clusters=n_clusters, random_state=0, n_init='auto').fit(issues_embeddings)
+            kmeans_labels = kmeans.labels_
 
-    # Perform KMeans clustering
-    kmeans = KMeans(n_clusters=n_clusters, random_state=0, n_init='auto').fit(issues_embeddings)
-    kmeans_labels = kmeans.labels_
+            # Perform PCA
+            pca_model = PCA(n_components=2)
+            pca_model.fit(issues_embeddings)
+            new_values = pca_model.transform(issues_embeddings)
 
-    # Perform PCA
-    pca_model = PCA(n_components=2)
-    pca_model.fit(issues_embeddings)
-    new_values = pca_model.transform(issues_embeddings)
+            # Create cluster plot
+            cluster_df = pd.DataFrame({
+                'PCA1': new_values[:, 0],
+                'PCA2': new_values[:, 1],
+                'Cluster': kmeans_labels,
+                'Issue': issues_group['Issue Name']
+            })
 
-    # Create cluster plot
-    cluster_df = pd.DataFrame({
-        'PCA1': new_values[:, 0],
-        'PCA2': new_values[:, 1],
-        'Cluster': kmeans_labels,
-        'Issue': issues_group['Issue Name']
-    })
+            cluster_fig = px.scatter(
+                cluster_df,
+                x='PCA1',
+                y='PCA2',
+                color='Cluster',
+                hover_data=['Issue'],
+                title='Issue Clusters Visualization'
+            )
 
-    cluster_fig = px.scatter(
-        cluster_df,
-        x='PCA1',
-        y='PCA2',
-        color='Cluster',
-        hover_data=['Issue'],
-        title='Issue Clusters Visualization'
-    )
-
-    cluster_fig.update_traces(marker=dict(size=20))
-
-    return cluster_fig
+            cluster_fig.update_traces(marker=dict(size=20))
+            
+        return cluster_fig
+        
+    except Exception as e:
+        st.error(f"Error during clustering analysis: {str(e)}")
+        st.info("Clustering requires either an internet connection to download models or sufficient data for the fallback method.")
+        return None
 
 
 def main():
@@ -393,7 +403,11 @@ def main():
                     st.subheader("Clustering Analysis")
                     n_clusters = st.slider("Select number of clusters", 2, 15, 10)
                     cluster_fig = perform_clustering(issues_group, n_clusters)
-                    st.plotly_chart(cluster_fig, use_container_width=True)
+                    
+                    if cluster_fig is not None:
+                        st.plotly_chart(cluster_fig, use_container_width=True)
+                    else:
+                        st.warning("Clustering could not be performed. Please check your internet connection or try again later.")
 
                     # Export Section
                     st.subheader("Export Results")
